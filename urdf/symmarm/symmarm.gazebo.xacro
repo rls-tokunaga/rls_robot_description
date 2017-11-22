@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="symmarm_common_gazebo">
+    <gazebo reference="attachment_under">
+      <selfCollide>true</selfCollide>
+    </gazebo>
+
+    <gazebo reference="attachment_top">
+      <selfCollide>true</selfCollide>
+    </gazebo>
+
+    <gazebo reference="fixed_6">
+      <provideFeedback>true</provideFeedback>
+      <turnGravityOff>false</turnGravityOff>
+    </gazebo>
+  </xacro:macro>
+
+  <xacro:macro name="symmarm_gazebo" params="name">
+    <gazebo reference="link${name}">
+      <selfCollide>true</selfCollide>
+    </gazebo>
+
+    <gazebo reference="joint${name}">
+      <provideFeedback>true</provideFeedback>
+      <!-- <implicitSpringDamper>true</implicitSpringDamper> -->
+      <turnGravityOff>true</turnGravityOff>
+    </gazebo>
+  </xacro:macro>
+
+</robot>

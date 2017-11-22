@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find rls_robot_description)/urdf/sensors/FT/ft_sensor.transmission.xacro"/>
+  <xacro:include filename="$(find rls_robot_description)/urdf/sensors/FT/ft_sensor.gazebo.xacro"/>
+
+  <xacro:arg name="ft_sensor_parent" default="attachment_top"/>
+  <!-- =============== Link =============== -->
+  <link name="ft_sensor">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.001"/>
+      <inertia ixx="0.00001" ixy="0" ixz="0"
+               iyy="0.00001" iyz="0"
+               izz="0.00001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+  	<box size=".001 .001 .001" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+	<box size=".001 .001 .001" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ===============  Joint =============== -->
+  <joint name="ft_sensor_joint" type="revolute">
+    <parent link="$(arg ft_sensor_parent)"/>
+    <child link="ft_sensor"/>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="0.0" lower="0" upper="0" velocity="0.0"/>
+  </joint>
+
+  <!-- =============== Transmission =============== -->
+  <xacro:ft_sensor_transmission />
+
+  <!-- =============== Gazobo =============== -->
+  <xacro:ft_sensor_gazebo />
+
+</robot>

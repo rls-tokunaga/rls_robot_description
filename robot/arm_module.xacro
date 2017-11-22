@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<robot name="arm_module" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:arg name="prefix" default="true"/>
+  <xacro:arg name="gripper_parent" default="attachment_top"/>
+
+  <!-- Generic simulator_gazebo plugins -->
+  <xacro:include filename="$(find rls_robot_description)/gazebo/gazebo.urdf.xacro" />
+
+  <!-- Materials for visualization -->
+  <xacro:include filename="$(find rls_robot_description)/urdf/common.xacro"/>
+
+  <!-- Define arm with gripper mounted on a base -->
+  <xacro:macro name="base_link_setting" params="name">
+    <link name="${name}"/>
+    <xacro:arg name="symmarm_parent" default="${name}"/>
+  </xacro:macro>
+
+  <base_link_setting name="world"/>
+
+  <!-- Base, arm, gripper and RGB-D sensor -->
+  <xacro:include filename="$(find rls_robot_description)/urdf/symmarm/symmarm.urdf.xacro">
+    <xacro:arg name="symmarm_parent" default="$(arg symmarm_parent)"/>
+  </xacro:include>
+  <xacro:include filename="$(find rls_robot_description)/urdf/gripper/gripper.urdf.xacro">
+    <xacro:arg name="gripper_parent" default="$(arg gripper_parent)"/>
+  </xacro:include>
+
+</robot>

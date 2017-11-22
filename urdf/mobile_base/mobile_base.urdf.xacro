@@ -1,0 +1,265 @@
+<robot name="mobile_base" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find rls_robot_description)/urdf/mobile_base/mobile_base.transmission.xacro"/>
+  <xacro:include filename="$(find rls_robot_description)/urdf/mobile_base/mobile_base.gazebo.xacro"/>
+
+  <xacro:property name="mobile_base_mass" value="37.524"/>
+
+  <!-- =============== Link =============== -->
+
+  <link name="base_footprint"/>
+
+  <link name="base_link">
+     <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+	<mesh filename="package://rls_robot_description/meshes/stl/Newbase.stl"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+	<mesh filename="package://rls_robot_description/meshes/stl/Newbase.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="${mobile_base_mass}"/>
+      <inertia ixx="0.0020833333" ixy="0" ixz="0" iyy="0.0070833333" iyz="0" izz="0.0083333333"/>
+    </inertial>
+  </link>
+
+  <link name="mount_panel"/>
+
+  <link name="fixture_b">
+     <visual>
+      <origin rpy="0 0 0" xyz="0 0 0.012"/>
+      <geometry>
+	<mesh filename="package://rls_robot_description/meshes/stl/NewFixture.stl"/>
+      </geometry>
+      <material name="gray"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+	<mesh filename="package://rls_robot_description/meshes/stl/NewFixture.stl"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <xacro:macro name="main_wheel_link" params="name *origin">
+    <link name="${name}">
+      <visual>
+        <xacro:insert_block name="origin"/>
+	<geometry>
+  	  <mesh filename="package://rls_robot_description/meshes/stl/wheel.stl"/>
+	</geometry>
+	<material name="blue"/>
+      </visual>
+      <inertial>
+	<origin rpy="${PI} 0 0" xyz="0.0 0.0 0.0"/>
+	<mass value="0.5"/>
+	<inertia ixx="0.001" ixy="0.000" ixz="0.00"
+	                     iyy="0.001" iyz="0.00"
+		                         izz="0.013"/>
+      </inertial>
+      <collision>
+        <xacro:insert_block name="origin"/>
+	<geometry>
+  	  <mesh filename="package://rls_robot_description/meshes/stl/wheel.stl"/>
+	</geometry>
+      </collision>
+    </link>
+  </xacro:macro>
+
+  <xacro:main_wheel_link name="r_wheel">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </xacro:main_wheel_link>
+  <xacro:main_wheel_link name="l_wheel">
+    <origin rpy="${PI} 0 0" xyz="0 0 0"/>
+  </xacro:main_wheel_link>
+
+  <xacro:macro name="small_wheel_link" params="name">
+    <link name="${name}_bearing">
+      <inertial>
+	<origin rpy="0 0 0" xyz="0 0 0"/>
+	<mass value="0.001"/>
+	<inertia ixx="0.02661733557" ixy="0.00029270634" ixz="0.00392189887"
+		                     iyy="0.02844355207" iyz="0.0010838933"
+		                                         izz="0.01248008322"/>
+      </inertial>
+      <visual>
+	<origin rpy="0 0 0" xyz="0 0 0"/>
+	<geometry>
+  	  <box size=".001 .001 .001" />
+	</geometry>
+      </visual>
+      <!-- <collision> -->
+      <!-- 	<origin rpy="0 0 0" xyz="0 0 0"/> -->
+      <!-- 	<geometry> -->
+      <!-- 	  <box size=".001 .001 .001" /> -->
+      <!-- 	</geometry> -->
+      <!-- </collision> -->
+    </link>
+
+    <link name="${name}_caster">
+      <visual>
+	<origin rpy="${PI} 0 0" xyz="0 0 0"/>
+	<geometry>
+    	  <mesh filename="package://rls_robot_description/meshes/stl/caster.stl"/>
+	</geometry>
+	<material name="white"/>
+      </visual>
+      <inertial>
+	<origin rpy="0 0 0" xyz="0 0 0"/>
+	<mass value="0.001"/>
+	<inertia ixx="0.02661733557" ixy="0.00029270634" ixz="0.00392189887"
+		                     iyy="0.02844355207" iyz="0.0010838933"
+		                                         izz="0.01248008322"/>
+      </inertial>
+      <!-- <collision> -->
+      <!-- 	<origin rpy="${PI} 0 0" xyz="0 0 0"/> -->
+      <!-- 	<geometry> -->
+      <!-- 	  <mesh filename="package://rls_robot_description/meshes/stl/caster.stl"/> -->
+      <!-- 	</geometry> -->
+      <!-- </collision> -->
+    </link>
+
+    <link name="${name}_small_wheel">
+      <visual>
+	<origin rpy="0 0 0" xyz="0 0 -0.005"/>
+	<geometry>
+    	  <mesh filename="package://rls_robot_description/meshes/stl/smallWheel.stl"/>
+	</geometry>
+	<material name="gray"/>
+      </visual>
+      <inertial>
+	<origin rpy="0 0 0" xyz="0 0 0"/>
+	<mass value="0.1"/>
+	<inertia ixx="0.02661733557" ixy="0.00029270634" ixz="0.00392189887"
+		                     iyy="0.02844355207" iyz="0.0010838933"
+		                                         izz="0.01248008322"/>
+      </inertial>
+      <collision>
+	<origin rpy="0 0 0" xyz="0 0 -0.005"/>
+	<geometry>
+    	  <mesh filename="package://rls_robot_description/meshes/stl/smallWheel.stl"/>
+	</geometry>
+      </collision>
+    </link>
+  </xacro:macro>
+
+  <xacro:small_wheel_link name="fr"/>
+  <xacro:small_wheel_link name="fl"/>
+  <xacro:small_wheel_link name="br"/>
+  <xacro:small_wheel_link name="bl"/>
+
+  <!-- <link name="hand_changer"> -->
+  <!--    <visual> -->
+  <!--     <origin rpy="0 0 0" xyz="0 0 0"/> -->
+  <!--     <geometry> -->
+  <!-- 	<mesh filename="package://rls_robot_description/meshes/stl/NewHandChanger.stl"/> -->
+  <!--     </geometry> -->
+  <!--     <material name="white"/> -->
+  <!-- </visual> -->
+
+  <!--   <collision> -->
+  <!--     <origin rpy="0 0 0" xyz="0 0 0"/> -->
+  <!--     <geometry> -->
+  <!-- 	<mesh filename="package://rls_robot_description/meshes/stl/NewHandChanger.stl"/> -->
+  <!--     </geometry> -->
+  <!--   </collision> -->
+  <!-- </link> -->
+
+  <!-- ===============  Joint =============== -->
+  <joint name="base_link_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0.0"/>
+  </joint>
+
+  <joint name="l_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="l_wheel"/>
+    <origin xyz="0.0 0.202 0.080" rpy="-${PI/2} 0 0" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <joint name="r_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="r_wheel"/>
+    <origin xyz="0.0 -0.202 0.080" rpy="-${PI/2} 0 0" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <joint name="mount" type="fixed">
+    <parent link="base_link"/>
+    <child link="mount_panel"/>
+    <origin xyz="-0.030092 0.0 0.703546" rpy="0.0 0.52359877 0.0"/>
+  </joint>
+
+  <joint name="fixture_fixed" type="fixed">
+    <parent link="base_link"/>
+    <child link="fixture_b"/>
+    <origin xyz="0.0231 0.0 0.7157" rpy="0.0 0.52359877 0.0"/>
+  </joint>
+
+  <xacro:macro name="small_wheel_joint" params="name *origin">
+    <!-- <joint name="${name}_bearing_joint" type="fixed"> -->
+    <joint name="${name}_bearing_joint" type="prismatic">
+      <parent link="base_link"/>
+      <child link="${name}_bearing"/>
+      <xacro:insert_block name="origin"/>
+      <origin xyz="0.19011 0.12985 0.09" rpy="0 0 ${PI/2}" />
+      <axis xyz="0 0 1" />
+      <limit effort="100.0" lower="0.0" upper="0.017" velocity="0.41887902"/>
+      <dynamics damping="0.0" friction="0.01"/>
+    </joint>
+
+    <joint name="${name}_caster_joint" type="continuous">
+      <parent link="${name}_bearing"/>
+      <child link="${name}_caster"/>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <axis xyz="0 0 1" />
+    </joint>
+
+    <joint name="${name}_wheel_joint" type="continuous">
+      <parent link="${name}_caster"/>
+      <child link="${name}_small_wheel"/>
+      <origin xyz="0 0.025 -0.067" rpy="0 ${PI/2} 0" />
+      <axis xyz="0 0 1" />
+    </joint>
+  </xacro:macro>
+
+  <xacro:small_wheel_joint name="fr">
+    <origin xyz="0.19011 -0.12985 0.09" rpy="0 0 ${PI/2}" />
+  </xacro:small_wheel_joint>
+  <xacro:small_wheel_joint name="fl">
+    <origin xyz="0.19011 0.12985 0.09" rpy="0 0 ${PI/2}" />
+  </xacro:small_wheel_joint>
+  <xacro:small_wheel_joint name="br">
+    <origin xyz="-0.22189 -0.12985 0.09" rpy="0 0 ${PI/2}" />
+  </xacro:small_wheel_joint>
+  <xacro:small_wheel_joint name="bl">
+    <origin xyz="-0.22189 0.12985 0.09" rpy="0 0 ${PI/2}" />
+  </xacro:small_wheel_joint>
+
+  <!-- =============== Transmission =============== -->
+  <xacro:main_wheel_transmission name="r_wheel" reduction="100"/>
+  <xacro:main_wheel_transmission name="l_wheel" reduction="100"/>
+  <xacro:small_wheel_transmission name="fr"/>
+  <xacro:small_wheel_transmission name="fl"/>
+  <xacro:small_wheel_transmission name="br"/>
+  <xacro:small_wheel_transmission name="bl"/>
+
+  <!-- =============== Gazobo =============== -->
+  <xacro:mobile_base_gazebo/>
+  <xacro:main_wheel_gazebo name="r_wheel"/>
+  <xacro:main_wheel_gazebo name="l_wheel"/>
+  <xacro:small_wheel_gazebo name="fr"/>
+  <xacro:small_wheel_gazebo name="fl"/>
+  <xacro:small_wheel_gazebo name="br"/>
+  <xacro:small_wheel_gazebo name="bl"/>
+
+</robot>

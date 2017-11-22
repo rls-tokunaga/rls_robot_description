@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package>
+  <name>rls_robot_description</name>
+  <version>1.0.0</version>
+  <description>
+     The rls_robot_description package:
+     I referred to the chapter 7 code of the book "Effective-Robotics-Programming-with-ROS"
+     shown at the following URL.
+     https://github.com/PacktPublishing/Effective-Robotics-Programming-with-ROS/tree/master/B05576_07_Code/rosbook_arm_description
+  </description>
+
+  <maintainer email="xxxxx@rls.mse.tcu.ac.jp">Home robot group in RLS lab</maintainer>
+
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <!-- Commonly used license strings: -->
+  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <export/>
+</package>

@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<robot name="modular_home_robot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:arg name="prefix" default="true"/>
+  <!-- <xacro:arg name="symmarm_parent" default="fixture_b"/> -->
+  <xacro:arg name="gripper_parent" default="attachment_top"/>
+
+  <!-- Use FT sensor -->
+  <!-- <xacro:arg name="ft_sensor_parent" default="attachment_top"/> -->
+  <!-- <xacro:arg name="gripper_parent" default="ft_sensor"/> -->
+
+  <!-- Generic simulator_gazebo plugins -->
+  <xacro:include filename="$(find rls_robot_description)/gazebo/gazebo.urdf.xacro" />
+
+  <!-- Materials for visualization -->
+  <xacro:include filename="$(find rls_robot_description)/urdf/common.xacro"/>
+
+  <!-- Base, arm, gripper, F/T sensor and RGB-D sensor -->
+  <xacro:include filename="$(find rls_robot_description)/urdf/mobile_base/mobile_base.urdf.xacro"/>
+
+  <xacro:include filename="$(find rls_robot_description)/urdf/symmarm/symmarm.urdf.xacro">
+    <xacro:arg name="symmarm_parent" default="$(arg symmarm_parent)"/>
+  </xacro:include>
+
+  <xacro:if value="$(arg prefix)">
+    <!-- Define FT -->
+    <!-- <xacro:include filename="$(find rls_robot_description)/urdf/sensors/FT/ft_sensor.urdf.xacro"> -->
+    <!--   <xacro:arg name="ft_sensor_parent" default="$(ft_sensor_parent)"/> -->
+    <!-- </xacro:include> -->
+
+    <!-- Define KinectV2 -->
+    <xacro:include filename="$(find rls_robot_description)/urdf/sensors/kinect2/kinect2.urdf.xacro"/>
+    <xacro:kinect2 name="kinect2" parent="base_link">
+      <origin xyz="0.3 0 0.495" rpy="0 0 0"/>
+      <origin xyz="0 0 0" rpy="${-90.0 * deg_to_rad} 0 ${-90.0 * deg_to_rad}"/>
+    </xacro:kinect2>
+  </xacro:if>
+
+  <xacro:include filename="$(find rls_robot_description)/urdf/gripper/gripper.urdf.xacro">
+    <xacro:arg name="gripper_parent" default="$(arg gripper_parent)"/>
+  </xacro:include>
+
+</robot>

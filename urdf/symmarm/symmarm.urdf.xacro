@@ -1,0 +1,233 @@
+<robot name="symmarm" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find rls_robot_description)/urdf/symmarm/symmarm.transmission.xacro"/>
+  <xacro:include filename="$(find rls_robot_description)/urdf/symmarm/symmarm.gazebo.xacro"/>
+
+  <xacro:arg name="symmarm_parent" default="fixture_b"/>
+
+  <xacro:property name="attachment_mass" value="0.621"/>
+
+  <xacro:property name="link0_mass" value="2.387"/>
+  <xacro:property name="link1_mass" value="2.339"/>
+  <xacro:property name="link2_mass" value="1.587"/>
+  <xacro:property name="link3_mass" value="2.339"/>
+  <xacro:property name="link4_mass" value="1.587"/>
+  <xacro:property name="link5_mass" value="2.387"/>
+  <xacro:property name="link6_mass" value="2.621"/>
+
+  <xacro:property name="limit_effort" value="10000"/>
+
+  <!-- =============== Link =============== -->
+  <link name="attachment_under">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.00 0.006 -0.166"/>
+      <mass value="${attachment_mass}"/>
+      <inertia ixx="0.015" ixy="0.000" ixz="0.000"
+ 	                   iyy="0.014" iyz="-0.002"
+	                           izz="0.005"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+  	<mesh filename="package://rls_robot_description/meshes/dae/attachment.dae"/>
+      </geometry>
+      <material name="black_m"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+  	<mesh filename="package://rls_robot_description/meshes/stl/attachment.stl"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="attachment_top">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.00 0.006 -0.166"/>
+      <mass value="${attachment_mass}"/>
+      <inertia ixx="0.015" ixy="0.000" ixz="0.000"
+	                   iyy="0.014" iyz="-0.002"
+	                               izz="0.005"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+  	<box size=".001 .001 .001" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+	<box size=".001 .001 .001" />
+      </geometry>
+    </collision>
+  </link>
+
+  <xacro:macro name="symmarm_link" params="name mesh *inertial">
+    <link name="${name}">
+      <visual>
+  	<origin rpy="0 0 0" xyz="0 0 0"/>
+  	<geometry>
+  	  <mesh filename="package://rls_robot_description/meshes/dae/${mesh}.dae"/>
+  	</geometry>
+  	<material name="yellow"/>
+      </visual>
+      <xacro:insert_block name="inertial"/>
+      <collision>
+  	<origin rpy="0 0 0" xyz="0 0 0"/>
+  	<geometry>
+  	  <mesh filename="package://rls_robot_description/meshes/stl/${mesh}.stl"/>
+  	</geometry>
+      </collision>
+    </link>
+  </xacro:macro>
+
+  <xacro:symmarm_link name="link0" mesh="m1">
+    <inertial>
+      <origin rpy="0.0 0.0 0.0" xyz="0.00 0.006 -0.166"/>
+      <mass value="${link0_mass}"/>
+      <inertia ixx="0.015" ixy="0.000" ixz="0.000"
+  	                   iyy="0.014" iyz="-0.002"
+  	                               izz="0.005"/>
+    </inertial>
+  </xacro:symmarm_link>
+
+  <xacro:symmarm_link name="link1" mesh="m2">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.00 -0.005 0.001"/>
+      <mass value="${link1_mass}"/>
+      <inertia ixx="0.006" ixy="0.000" ixz="0.000"
+  	                   iyy="0.005" iyz="0.000"
+  	                               izz="0.004"/>
+    </inertial>
+  </xacro:symmarm_link>
+
+  <xacro:symmarm_link name="link2" mesh="m3">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.00 0.007 0.158"/>
+      <mass value="${link2_mass}"/>
+      <inertia ixx="0.005" ixy="0.000" ixz="0.000"
+  	                   iyy="0.004" iyz="-0.001"
+  	                               izz="0.002"/>
+    </inertial>
+  </xacro:symmarm_link>
+
+  <xacro:symmarm_link name="link3" mesh="m4">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.00 -0.005 0.001"/>
+      <mass value="${link3_mass}"/>
+      <inertia ixx="0.006" ixy="0.000" ixz="0.000"
+  	                   iyy="0.005" iyz="0.000"
+  	                               izz="0.004"/>
+    </inertial>
+  </xacro:symmarm_link>
+
+  <xacro:symmarm_link name="link4" mesh="m3">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.00 0.007 0.158"/>
+      <mass value="${link4_mass}"/>
+      <inertia ixx="0.005" ixy="0.000" ixz="0.000"
+  	                   iyy="0.004" iyz="-0.001"
+  	                               izz="0.002"/>
+    </inertial>
+  </xacro:symmarm_link>
+
+  <xacro:symmarm_link name="link5" mesh="m6">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.00 -0.009 -0.004"/>
+      <mass value="${link5_mass}"/>
+      <inertia ixx="0.007" ixy="0.000" ixz="0.000"
+  	                   iyy="0.005" iyz="-0.001"
+  	                               izz="0.005"/>
+    </inertial>
+  </xacro:symmarm_link>
+
+  <xacro:symmarm_link name="link6" mesh="m7">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.00 0.00 0.183"/>
+      <mass value="${link6_mass}"/>
+      <inertia ixx="0.007" ixy="0.000" ixz="0.00"
+  	                   iyy="0.007" iyz="0.000"
+                                       izz="0.004"/>
+    </inertial>
+  </xacro:symmarm_link>
+
+  <!-- ===============  Joint =============== -->
+  <joint name="fixture_under" type="fixed">
+    <parent link="$(arg symmarm_parent)"/>
+    <child link="attachment_under"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </joint>
+
+  <xacro:macro name="symmarm_joint" params="name parent child *origin *limit">
+    <joint name="${name}" type="revolute">
+      <parent link="${parent}"/>
+      <child link="${child}"/>
+      <xacro:insert_block name="origin"/>
+      <axis xyz="0 0 1" />
+      <xacro:insert_block name="limit"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:symmarm_joint name="joint0" parent="attachment_under" child="link0">
+    <origin xyz="0 0 0.266" rpy="0 0 0" />
+    <limit effort="${limit_effort}" lower="-${2*PI}" upper="${2*PI}" velocity="0.41887902"/>
+    <!-- <limit effort="10000" lower="-6.283185" upper="6.283185" velocity="0.41887902"/> -->
+  </xacro:symmarm_joint>
+
+  <xacro:symmarm_joint name="joint1" parent="link0" child="link1">
+    <origin xyz="0 0 0" rpy="-${PI/2} 0 0" />
+    <limit effort="${limit_effort}" lower="-2.0943951" upper="2.0943951" velocity="0.41887902"/>
+  </xacro:symmarm_joint>
+
+  <xacro:symmarm_joint name="joint2" parent="link1" child="link2">
+    <origin xyz="0 0 0" rpy="${PI/2} 0 0" />
+    <limit effort="${limit_effort}" lower="-${2*PI}" upper="${2*PI}" velocity="0.4363323125"/>
+  </xacro:symmarm_joint>
+
+  <xacro:symmarm_joint name="joint3" parent="link2" child="link3">
+    <origin xyz="0 0 0.2965" rpy="-${PI/2} 0 0" />
+    <limit effort="${limit_effort}" lower="-2.0943951" upper="2.0943951" velocity="0.41887902"/>
+  </xacro:symmarm_joint>
+
+  <xacro:symmarm_joint name="joint4" parent="link3" child="link4">
+    <origin xyz="0 0 0" rpy="${PI/2} 0 0" />
+    <limit effort="${limit_effort}" lower="-${2*PI}" upper="${2*PI}" velocity="0.4363323125"/>
+  </xacro:symmarm_joint>
+
+  <xacro:symmarm_joint name="joint5" parent="link4" child="link5">
+    <origin xyz="0 0 0.2965" rpy="-${PI/2} 0 0" />
+    <limit effort="${limit_effort}" lower="-2.0943951" upper="2.0943951" velocity="0.41887902"/>
+  </xacro:symmarm_joint>
+
+  <xacro:symmarm_joint name="joint6" parent="link5" child="link6">
+    <origin xyz="0 0 0" rpy="${PI/2} 0 0" />
+    <limit effort="${limit_effort}" lower="-${2*PI}" upper="${2*PI}" velocity="0.41887902"/>
+  </xacro:symmarm_joint>
+
+  <joint name="fixed_6" type="fixed">
+    <parent link="link6"/>
+    <child link="attachment_top"/>
+    <origin xyz="0 0 0.266" rpy="0 0 0" />
+  </joint>
+
+  <!-- =============== Transmission =============== -->
+  <xacro:symmarm_transmission name="0" reduction="625"/>
+  <xacro:symmarm_transmission name="1" reduction="625"/>
+  <xacro:symmarm_transmission name="2" reduction="552"/>
+  <xacro:symmarm_transmission name="3" reduction="625"/>
+  <xacro:symmarm_transmission name="4" reduction="552"/>
+  <xacro:symmarm_transmission name="5" reduction="625"/>
+  <xacro:symmarm_transmission name="6" reduction="625"/>
+
+  <!-- =============== Gazobo =============== -->
+  <xacro:symmarm_common_gazebo/>
+  <xacro:symmarm_gazebo name="0"/>
+  <xacro:symmarm_gazebo name="1"/>
+  <xacro:symmarm_gazebo name="2"/>
+  <xacro:symmarm_gazebo name="3"/>
+  <xacro:symmarm_gazebo name="4"/>
+  <xacro:symmarm_gazebo name="5"/>
+  <xacro:symmarm_gazebo name="6"/>
+
+</robot>

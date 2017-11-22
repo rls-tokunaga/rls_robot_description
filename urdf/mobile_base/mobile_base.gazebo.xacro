@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="mobile_base_gazebo">
+    <gazebo reference="base_link">
+      <selfCollide>true</selfCollide>
+    </gazebo>
+  </xacro:macro>
+
+  <xacro:macro name="main_wheel_gazebo" params="name">
+    <gazebo reference="${name}">
+      <material>Gazebo/Blue</material>
+      <selfCollide>true</selfCollide>
+      <mu1 value="1.0" />
+      <mu2 value="1.0" />
+    </gazebo>
+  </xacro:macro>
+
+  <xacro:macro name="small_wheel_gazebo" params="name">
+    <!-- Link -->
+    <gazebo reference="${name}_bearing">
+      <selfCollide>true</selfCollide>
+      <!-- This caster is no frictional resistance. -->
+      <mu1 value="0.0" />
+      <mu2 value="0.0" />
+    </gazebo>
+
+    <gazebo reference="${name}_caster">
+      <selfCollide>true</selfCollide>
+      <!-- This caster is no frictional resistance. -->
+      <mu1 value="0.0" />
+      <mu2 value="0.0" />
+    </gazebo>
+
+    <gazebo reference="${name}_small_wheel">
+      <material>Gazebo/Blue</material>
+      <selfCollide>true</selfCollide>
+      <mu1 value="0.0" />
+      <mu2 value="0.0" />
+    </gazebo>
+
+    <!-- Joint -->
+    <gazebo reference="${name}_bearing_joint">
+      <!-- <implicitSpringDamper>true</implicitSpringDamper> -->
+    </gazebo>
+
+    <gazebo reference="${name}_caster_joint">
+      <!-- <implicitSpringDamper>true</implicitSpringDamper> -->
+    </gazebo>
+
+    <gazebo reference="${name}_wheel_joint">
+      <!-- <implicitSpringDamper>true</implicitSpringDamper> -->
+    </gazebo>
+  </xacro:macro>
+
+
+</robot>

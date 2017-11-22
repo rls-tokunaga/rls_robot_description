@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="symmarm_transmission" params="name reduction">
+
+  <transmission name="${name}_transmission" params="name reduction">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joint${name}">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <!-- <hardwareInterface>EffortJointInterface</hardwareInterface> -->
+    </joint>
+    <actuator name="joint${name}_motor">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+      <!-- <hardwareInterface>EffortJointInterface</hardwareInterface> -->
+      <mechanicalReduction>${reduction}</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  </xacro:macro>
+</robot>

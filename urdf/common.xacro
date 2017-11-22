@@ -1,0 +1,36 @@
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Constants for robot dimensions -->
+  <xacro:property name="PI" value="3.1415926535897931"/>
+  <xacro:property name="deg_to_rad" value="0.01745329251994329577"/>
+
+  <!-- Color config -->
+  <material name="white">
+    <color rgba="1.0 1.0 1.0 1.0"/>
+  </material>
+
+  <material name="black">
+    <color rgba="0.0 0.0 0.0 1.0"/>
+  </material>>
+
+  <material name="gray">
+    <color rgba="0.5 0.5 0.5 1"/>
+  </material>
+
+  <material name="blue">
+    <color rgba="0.0 0.0 1.0 1"/>
+  </material>
+
+  <material name="right_blue">
+    <color rgba="0.3 0.3 0.65 1.0"/>
+  </material>
+
+  <material name="black_m">
+    <color rgba="0.08 0.08 0.08 1"/>
+  </material>>
+
+  <material name="yellow">
+    <color rgba="0.5 0.5 0.0 1"/>
+  </material>
+
+</robot>

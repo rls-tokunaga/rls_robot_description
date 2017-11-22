@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<robot name="gripper_gazebo" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <gazebo reference="fixture_h">
+    <material>Gazebo/Black</material>
+    <selfCollide>true</selfCollide>
+  </gazebo>
+
+  <gazebo reference="gripper">
+    <selfCollide>true</selfCollide>
+  </gazebo>
+
+  <xacro:macro name="gripper_gazebo" params="name">
+    <gazebo reference="root_finger_${name}">
+      <material>Gazebo/Black</material>
+      <selfCollide>true</selfCollide>
+      <mu1>0.1</mu1>
+      <mu2>0.1</mu2>
+    </gazebo>
+
+    <gazebo reference="finger_${name}">
+      <material>Gazebo/Blue</material>
+      <selfCollide>true</selfCollide>
+      <mu1>0.1</mu1>
+      <mu2>0.1</mu2>
+    </gazebo>
+
+    <gazebo reference="prismatic_finger_${name}">
+      <!-- <provideFeedback>true</provideFeedback> -->
+      <!-- <implicitSpringDamper>true</implicitSpringDamper> -->
+    </gazebo>
+  </xacro:macro>
+
+</robot>
