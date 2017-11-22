@@ -6,11 +6,11 @@
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="joint${name}">
       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      <!-- <hardwareInterface>EffortJointInterface</hardwareInterface> -->
+      <!-- <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface> -->
     </joint>
     <actuator name="joint${name}_motor">
       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-      <!-- <hardwareInterface>EffortJointInterface</hardwareInterface> -->
+      <!-- <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface> -->
       <mechanicalReduction>${reduction}</mechanicalReduction>
     </actuator>
   </transmission>

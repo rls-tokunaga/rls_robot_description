@@ -95,12 +95,6 @@
   	  <box size=".001 .001 .001" />
 	</geometry>
       </visual>
-      <!-- <collision> -->
-      <!-- 	<origin rpy="0 0 0" xyz="0 0 0"/> -->
-      <!-- 	<geometry> -->
-      <!-- 	  <box size=".001 .001 .001" /> -->
-      <!-- 	</geometry> -->
-      <!-- </collision> -->
     </link>
 
     <link name="${name}_caster">
@@ -118,12 +112,6 @@
 		                     iyy="0.02844355207" iyz="0.0010838933"
 		                                         izz="0.01248008322"/>
       </inertial>
-      <!-- <collision> -->
-      <!-- 	<origin rpy="${PI} 0 0" xyz="0 0 0"/> -->
-      <!-- 	<geometry> -->
-      <!-- 	  <mesh filename="package://rls_robot_description/meshes/stl/caster.stl"/> -->
-      <!-- 	</geometry> -->
-      <!-- </collision> -->
     </link>
 
     <link name="${name}_small_wheel">
@@ -163,7 +151,6 @@
   <!--     </geometry> -->
   <!--     <material name="white"/> -->
   <!-- </visual> -->
-
   <!--   <collision> -->
   <!--     <origin rpy="0 0 0" xyz="0 0 0"/> -->
   <!--     <geometry> -->
@@ -206,7 +193,6 @@
   </joint>
 
   <xacro:macro name="small_wheel_joint" params="name *origin">
-    <!-- <joint name="${name}_bearing_joint" type="fixed"> -->
     <joint name="${name}_bearing_joint" type="prismatic">
       <parent link="base_link"/>
       <child link="${name}_bearing"/>

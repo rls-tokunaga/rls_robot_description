@@ -61,11 +61,6 @@
       <inertial>
         <xacro:insert_block name="root_origin"/>
 	<mass value="0.002" />
-      <!-- 	<inertia -->
-      <!--       ixx="1.0" ixy="1.0" ixz="1.0" -->
-      <!--       iyy="1.0" iyz="1.0" -->
-      <!--       izz="1.0" /> -->
-      <!-- </inertial> -->
       	<inertia
             ixx="3.30140945222581E-06" ixy="6.88214269644119E-22" ixz="1.69538938348869E-20"
                                        iyy="2.38014886911173E-06" iyz="-3.12343399300023E-21"

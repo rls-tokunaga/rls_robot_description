@@ -26,8 +26,8 @@
     </gazebo>
 
     <gazebo reference="prismatic_finger_${name}">
-      <!-- <provideFeedback>true</provideFeedback> -->
-      <!-- <implicitSpringDamper>true</implicitSpringDamper> -->
+      <provideFeedback>true</provideFeedback>
+      <implicitSpringDamper>true</implicitSpringDamper>
     </gazebo>
   </xacro:macro>
 
