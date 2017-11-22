@@ -1,0 +1,38 @@
+<launch>
+  <arg name="trajectory_control" default="false"/>
+  <arg name="navigation" default="false"/>
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find rls_robot_description)/config/controller.yaml" command="load"/>
+
+  <group unless="$(arg navigation)">
+    <!-- load the controllers -->
+    <node unless="$(arg trajectory_control)" name="controller_spawner" pkg="controller_manager"
+	  type="spawner" ns="modular_home_robot" output="screen"
+	  args="joint_state_controller
+		diff_drive_controller
+		right_gripper_position_controller
+		left_gripper_position_controller
+		joint0_position_controller
+		joint1_position_controller
+		joint2_position_controller
+		joint3_position_controller
+		joint4_position_controller
+		joint5_position_controller
+		joint6_position_controller"/>
+
+    <node if="$(arg trajectory_control)" name="controller_spawner" pkg="controller_manager"
+	  type="spawner" ns="modular_home_robot" output="screen"
+	  args="joint_state_controller
+		joint_trajectory_controller
+		diff_drive_controller
+		gripper_controller"/>
+  </group>
+
+  <node if="$(arg navigation)" name="controller_spawner" pkg="controller_manager" type="spawner" ns="modular_home_robot" output="screen" args="joint_state_controller diff_drive_controller"/>
+
+  <!-- convert joint states to TF transforms for rviz, etc -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen" ns="/modular_home_robot">
+  </node>
+
+</launch>

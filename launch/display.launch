@@ -1,7 +1,5 @@
 <launch>
 
-  <!-- <arg name="model" default="$(find rls_robot_description)/robot/arm_module.xacro"/> -->
-  <!-- <arg name="model" default="$(find rls_robot_description)/robot/mobile_base.xacro"/> -->
   <arg name="model" default="$(find rls_robot_description)/robot/modular_home_robot.xacro"/>
   <arg name="gui" default="True"/>
   <arg name="rvizconfig" default="$(find rls_robot_description)/rviz/display.rviz"/>

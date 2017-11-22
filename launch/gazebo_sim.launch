@@ -1,0 +1,91 @@
+<launch>
+  <!-- ========== Set Config ========== -->
+
+  <!-- File Path -->
+  <arg name="model" default="$(find rls_robot_description)/robot/modular_home_robot.xacro"/>
+  <!-- <arg name="world" default="$(find rls_gazebo_simulation)/world/home_room.world"/> -->
+  <arg name="rviz_cfg" default="-d $(find rls_robot_description)/rviz/simulation.rviz" />
+  <arg name="rqt_cfg" default="--perspective-file $(find rls_robot_description)/config/rqt/Default.perspective" />
+  <!-- <arg name="database_path" default="$(find rls_gazebo_simulation)/world/sim_maps/home_room.db"/> -->
+
+  <!-- Set Flag -->
+  <arg name="mapping_flag" default="false" />
+  <arg name="trajectory_control" default="false"/>
+
+  <!-- Gazebo config -->
+  <arg name="physics" default="ode"/> <!-- ode | bullet | simbody | dart -->
+  <arg name="verbose" default="true"/>
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+
+   <!-- Robot pose -->
+  <arg name="x" default="0.0"/>
+  <arg name="y" default="0.0"/>
+  <arg name="z" default="0.0"/>
+  <arg name="roll" default="0.0"/>
+  <arg name="pitch" default="0.0"/>
+  <arg name="yaw" default="1.57"/>
+
+  <!-- Initial joint position [rad] -->
+  <arg name="j0" default="0.0"/>
+  <arg name="j1" default="-1.937140"/>
+  <arg name="j2" default="0.0"/>
+  <arg name="j3" default="1.571728"/>
+  <arg name="j4" default="0.0"/>
+  <arg name="j5" default="1.571728"/>
+  <arg name="j6" default="0.0"/>
+
+  <arg name="r_finger" default="0.0"/>
+  <arg name="l_finger" default="0.0"/>
+
+  <arg unless="$(arg trajectory_control)" name="joint_init"
+       default="-J joint0 $(arg j0) -J joint1 $(arg j1) -J joint2 $(arg j2) -J joint3 $(arg j3)
+  		-J joint4 $(arg j4) -J joint5 $(arg j5) -J joint6 $(arg j6)
+  		-J prismatic_finger_right $(arg r_finger) -J prismatic_finger_left $(arg l_finger)"/>
+
+  <!-- Remap controller name -->
+  <remap from="/modular_home_robot/diff_drive_controller/cmd_vel" to="/planner/cmd_vel" />
+  <remap from="/modular_home_robot/diff_drive_controller/odom" to="/base_controller/odom" />
+
+  <!-- ========== Run Package ========== -->
+
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(arg world)"/>
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="physics" value="$(arg physics)" />
+    <arg name="verbose" value="$(arg verbose)" />
+  </include>
+
+  <include file="$(find rls_robot_description)/launch/control.launch">
+    <arg name="trajectory_control" value="$(arg trajectory_control)"/>
+  </include>
+
+  <!-- Robot Model spawn-->
+  <param name="robot_description" command="$(find xacro)/xacro '--inorder' '$(arg model)'"/>
+
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+	args="-urdf -model modular_home_robot -param robot_description
+	      -x $(arg x) -y $(arg y) -z $(arg z)
+              -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)
+	      $(arg joint_init)"/>
+
+  <!-- Navigation -->
+  <!-- <include file="$(find mobilebase_navigation)/launch/mobilebase_navigation.launch" > -->
+  <!--   <arg name="sim_flag" value="true" /> -->
+  <!--   <arg name="mapping" value="$(arg mapping_flag)" /> -->
+  <!--   <arg name="database_path" value="$(arg database_path)"/> -->
+  <!--   <arg if="$(arg mapping_flag)" name="rtabmap_args" value="-delete_db_on_start" /> -->
+  <!-- </include> -->
+
+  <!-- GUI config -->
+  <node pkg="rqt_gui" type="rqt_gui" name="rqt_gui" args="$(arg rqt_cfg)"/>
+
+</launch>
